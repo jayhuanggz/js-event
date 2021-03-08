@@ -1,5 +1,22 @@
 {
-    "name": "js-event",
-    "version": "0.1.0",
-    "author": "jayh"
+  "name": "js-event-more",
+  "version": "0.1.0",
+  "author": "jayh",
+  "description": "js-event-more is a js event library that is similar to the once famous YUI3 event framework, it is written to fulfill ex event pub-sub requirements with the following exclusive features:",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jayhuanggz/js-event.git"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jayhuanggz/js-event/issues"
+  },
+  "homepage": "https://github.com/jayhuanggz/js-event#readme"
 }

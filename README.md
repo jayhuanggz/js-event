@@ -1,4 +1,4 @@
-js-event is a js event library that is similar to the once famous YUI3 event framework, it is written to fulfill ex event pub-sub requirements with the following exclusive features:
+js-event-more is a js event library that is similar to the once famous YUI3 event framework, it is written to fulfill ex event pub-sub requirements with the following exclusive features:
 
 1. Behave like dom events with default event handler and event bubbling
 2. Event firing pipeline with <strong>before</strong>, <strong>on</strong>, <strong>after</strong> phases, provides strong controls over event  ordering. Event subscribers are called in the order: <strong>before -> on -> default -> after -> bubble up -> before -> on -> default -> after -> bubble and so on</strong>
@@ -13,7 +13,7 @@ The domain model is responsible for things like validation logics, submit, loadi
 
 
 ~~~
-import EventTarget from 'js-event'
+import EventTarget from 'js-event-more'
 
 // initlaize form model
 class FormModel {
