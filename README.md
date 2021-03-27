@@ -18,51 +18,51 @@ import EventTarget from 'js-event-more'
 // initlaize form model
 class FormModel {
 
-   constructor(){
-   	let eventTarget = new EventTarget();
-   	
-   	// specify the _doSubmit() method to be the default handler for submit event
-   	eventTarget.publish('submit',{
-       defaultFn : model._doSubmit,
-       context: model     
-	});
-	
-    // validate the form before submit
-    eventTarget.before('submit', model.validate, model);
-	this.eventTarget = eventTarget;
-   }
-   
-	submit(){
-		this.eventTarget.fire('submit');
-	}
-	
-	validate(e){
-		  let valid = true, error = ''
-       	  //do your validation here
+    constructor() {
+        let eventTarget = new EventTarget();
 
-          if(!valid){
-          // if validation fails, prevent the default handler to be called.
-          // in this example, default handler is _doSubmit()
-          	e.preventDefault();
-          	
-          	// fire the invalidated event, the view layer should 
-          	// catch the event and display error messages
-          	this.eventTarget.fire('invalidated', {
-          	  error : error
-          	});
-          }
-			
-	}
-	
-	_doSubmit(){
-		// do the actual submit logic here
-	
-	}
-	
-	destroy(){
-	   // detach all listeners
-	   this.eventTarget.off();
-	}
+        // specify the _doSubmit() method to be the default handler for submit event
+        eventTarget.publish('submit', {
+            defaultFn: model._doSubmit,
+            context: model
+        });
+
+        // validate the form before submit
+        eventTarget.before('submit', model.validate, model);
+        this.eventTarget = eventTarget;
+    }
+
+    submit() {
+        this.eventTarget.fire('submit');
+    }
+
+    validate(e) {
+        let valid = true, error = ''
+        //do your validation here
+
+        if (!valid) {
+            // if validation fails, prevent the default handler to be called.
+            // in this example, default handler is _doSubmit()
+            e.preventDefault();
+
+            // fire the invalidated event, the view layer should 
+            // catch the event and display error messages
+            this.eventTarget.fire('invalidated', {
+                error: error
+            });
+        }
+
+    }
+
+    _doSubmit() {
+        // do the actual submit logic here
+
+    }
+
+    destroy() {
+        // detach all listeners
+        this.eventTarget.off();
+    }
 }
 
 ~~~
@@ -78,46 +78,46 @@ With event bubbling, BookList only needs to subscribe to deleted event once. Tha
 ```
 class Book {
 
-     constrcutor(model){
+    constrcutor(model) {
         this.model = model;
         this.eventTarget = new EventTarget();
-     }
-	
-     delete(){
-        // delete from server
-       let promise = new Promise().then(()=>{
-       		this.eventTarget.fire('deleted')
-       });
-        
-     }
+    }
 
-}  
+    delete() {
+        // delete from server
+        let promise = new Promise().then(() => {
+            this.eventTarget.fire('deleted')
+        });
+
+    }
+
+}
 
 class BookList {
-      
-      constructor(){
+
+    constructor() {
         this.books = [];
         this.eventTarget = new EventTarget();
         // remove book on deleted event
-        this.eventTarget.on('deleted', this.removeBook,this);
-      
-      }
-      addBook(model){
-       let book = new Book(model);
-       this.books.push(book);
-       // tell book to bubble events to book list
-       book.addTarget(this);
-       
-      }
-      
-      removeBook(e){
-      		let book = e.target.model;
-      		let index = this.books.findIndex(b=>b.model.id === book.model.id)
-      		if(index !== -1){
-      			this.books.splice(index,1);
-      		}
-      
-      }	
+        this.eventTarget.on('deleted', this.removeBook, this);
+
+    }
+    addBook(model) {
+        let book = new Book(model);
+        this.books.push(book);
+        // tell book to bubble events to book list
+        book.addTarget(this);
+
+    }
+
+    removeBook(e) {
+        let book = e.target.model;
+        let index = this.books.findIndex(b => b.model.id === book.model.id)
+        if (index !== -1) {
+            this.books.splice(index, 1);
+        }
+
+    }
 }
 ```
 
